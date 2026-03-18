@@ -2,6 +2,11 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "maple",
   "name": "Coconut",
+  "seo": {
+    "metatags": {
+      "canonical": "https://docs.coconutapp.xyz"
+    }
+  },
   "colors": {
     "primary": "#CC2500",
     "light": "#E63B00",
