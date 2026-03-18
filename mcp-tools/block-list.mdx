@@ -1,0 +1,120 @@
+---
+title: "block_list"
+description: "List content blocks in the workspace"
+---
+
+# block_list
+
+List content blocks in the workspace. Can filter by kind (tweet, thread, note, etc), platform, status, or publishability.
+
+## Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `kind` | string | No | Filter by content type |
+| `platform` | string | No | Filter by platform: `x`, `instagram`, `tiktok`, `youtube`, `linkedin` |
+| `status` | string | No | Filter: `draft`, `scheduled`, `published`, `archived` |
+| `isPublishable` | boolean | No | Filter by publish readiness |
+| `limit` | number | No | Items per page (1-100, default: 20) |
+| `offset` | number | No | Items to skip (default: 0) |
+
+## Example
+
+<CodeGroup>
+```text Prompt
+Show me all my draft tweets
+```
+
+```json Response
+{
+  "blocks": [
+    {
+      "id": "block-456",
+      "kind": "tweet",
+      "platform": "x",
+      "content": "The best way to learn is to ship...",
+      "status": "draft",
+      "isPublishable": true,
+      "isAnalyzed": false,
+      "derivedFrom": ["content-123"],
+      "children": [],
+      "createdAt": "2024-03-15T11:00:00Z",
+      "updatedAt": "2024-03-15T11:00:00Z"
+    },
+    {
+      "id": "block-457",
+      "kind": "tweet",
+      "platform": "x",
+      "content": "Most people overthink, underexecute...",
+      "status": "draft",
+      "isPublishable": true,
+      "isAnalyzed": true,
+      "derivedFrom": [],
+      "children": [],
+      "createdAt": "2024-03-14T09:30:00Z",
+      "updatedAt": "2024-03-14T10:00:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 25,
+    "limit": 20,
+    "offset": 0,
+    "hasMore": true
+  }
+}
+```
+</CodeGroup>
+
+## Response Fields
+
+### block
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | string | Block UUID |
+| `kind` | string | Content type |
+| `platform` | string | Target platform |
+| `content` | string | The content text |
+| `status` | string | `draft`, `scheduled`, `published`, `archived` |
+| `isPublishable` | boolean | Ready to publish |
+| `isAnalyzed` | boolean | Has been AI analyzed |
+| `derivedFrom` | array | Source content IDs |
+| `children` | array | Child block IDs (for threads) |
+| `createdAt` | string | Creation timestamp |
+| `updatedAt` | string | Last update timestamp |
+
+### pagination
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `total` | number | Total blocks matching filter |
+| `limit` | number | Items per page |
+| `offset` | number | Items skipped |
+| `hasMore` | boolean | More items available |
+
+## Filter Combinations
+
+```text
+# All draft tweets
+kind=tweet, status=draft
+
+# Ready to publish LinkedIn posts
+platform=linkedin, isPublishable=true
+
+# All archived content
+status=archived
+
+# Publishable content across all platforms
+isPublishable=true
+```
+
+## Use Cases
+
+- Find drafts ready for publishing
+- Review content by platform
+- Track your content creation progress
+
+## Related Tools
+
+- [`block_create`](/mcp-tools/block-create) - Create new blocks
+- [`content_analyze`](/mcp-tools/content-analyze) - Analyze blocks

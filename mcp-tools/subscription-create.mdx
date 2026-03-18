@@ -1,0 +1,85 @@
+---
+title: "subscription_create"
+description: "Subscribe to a creator and trigger initial content ingestion"
+---
+
+# subscription_create
+
+Subscribe to a creator and trigger initial content ingestion. This counts against your creator limit. Ingestion runs asynchronously - use `ingestion_status` to check progress.
+
+## Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `creatorId` | string (UUID) | No* | Existing creator ID |
+| `platform` | string | No* | One of: `x`, `instagram`, `tiktok`, `youtube`, `linkedin` |
+| `handle` | string | No* | Creator's handle (1-100 characters) |
+| `postLimit` | number | No | Posts to fetch (1-100, default: 20) |
+| `dailyUpdates` | boolean | No | Enable daily content sync (default: false) |
+
+<Note>
+Either `creatorId` OR both `platform` and `handle` are required.
+</Note>
+
+## Example
+
+<CodeGroup>
+```text Prompt
+Subscribe to @levelsio on X and fetch their last 30 posts
+```
+
+```json Response
+{
+  "subscription": {
+    "creatorId": "550e8400-e29b-41d4-a716-446655440000",
+    "isActive": true,
+    "postLimit": 30,
+    "dailyUpdates": false,
+    "createdAt": "2024-03-15T10:00:00Z"
+  },
+  "ingestionJob": {
+    "id": "job-123",
+    "status": "pending",
+    "hint": "Use ingestion_status to check progress. Typical completion: 30-60 seconds."
+  },
+  "message": "Subscribed to @levelsio on x. Ingestion started."
+}
+```
+</CodeGroup>
+
+## Response Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `subscription.creatorId` | string | Creator UUID |
+| `subscription.isActive` | boolean | Subscription active status |
+| `subscription.postLimit` | number | Max posts to fetch |
+| `subscription.dailyUpdates` | boolean | Daily sync enabled |
+| `subscription.createdAt` | string | Subscription creation time |
+| `ingestionJob.id` | string | Job ID for status tracking |
+| `ingestionJob.status` | string | Initial status (`pending`) |
+| `message` | string | Human-readable confirmation |
+
+## Error Responses
+
+| Code | Meaning |
+|------|---------|
+| `already_exists` | Already subscribed to this creator |
+| `limit_exceeded` | Creator limit reached for your plan |
+| `not_found` | Creator not found (when using `creatorId`) |
+
+<Warning>
+Each subscription counts against your plan's creator limit. Check `workspace_stats` first.
+</Warning>
+
+## Use Cases
+
+- Follow a new creator to track their content
+- Set up daily syncs for active creators
+- Control how much historical content to fetch
+
+## Related Tools
+
+- [`creator_lookup`](/mcp-tools/creator-lookup) - Look up before subscribing
+- [`ingestion_status`](/mcp-tools/ingestion-status) - Check job progress
+- [`subscription_list`](/mcp-tools/subscription-list) - View all subscriptions

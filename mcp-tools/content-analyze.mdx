@@ -1,0 +1,112 @@
+---
+title: "content_analyze"
+description: "Analyze a piece of content using AI"
+---
+
+# content_analyze
+
+Analyze a piece of content using AI. Returns structured breakdown including hooks, main points, call-to-action, and writing style.
+
+## Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `contentId` | string (UUID) | Yes | Content ID to analyze |
+
+## Example
+
+<CodeGroup>
+```text Prompt
+Analyze the post from levelsio about launching projects
+```
+
+```json Response
+{
+  "analysis": {
+    "id": "analysis-789",
+    "contentId": "content-123",
+    "model": "claude-3-sonnet",
+    "analysisType": "content_breakdown",
+    "summary": "A thread sharing lessons from shipping 70 projects, emphasizing speed, user feedback, and iteration.",
+    "result": {
+      "hook": {
+        "type": "credibility",
+        "text": "Just launched my 70th project",
+        "effectiveness": "High - establishes authority immediately"
+      },
+      "mainPoints": [
+        "Ship fast - don't wait for perfection",
+        "Talk to users - get real feedback",
+        "Iterate quickly - improve based on data"
+      ],
+      "structure": {
+        "format": "numbered list",
+        "length": "short",
+        "readability": "high"
+      },
+      "callToAction": {
+        "type": "engagement",
+        "text": "Thread below",
+        "placement": "end"
+      },
+      "writingStyle": {
+        "tone": "confident, direct",
+        "voice": "first person",
+        "techniques": ["social proof", "actionable advice", "thread teaser"]
+      },
+      "suggestions": [
+        "Consider adding a specific example for each point",
+        "The numbered format works well for X/Twitter",
+        "Hook could include a specific result/outcome"
+      ]
+    },
+    "tokensUsed": 1250,
+    "createdAt": "2024-03-15T10:30:00Z"
+  }
+}
+```
+</CodeGroup>
+
+## Response Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `analysis.id` | string | Analysis UUID |
+| `analysis.contentId` | string | Content that was analyzed |
+| `analysis.model` | string | AI model used |
+| `analysis.analysisType` | string | Type of analysis |
+| `analysis.summary` | string | Brief content summary |
+| `analysis.result` | object | Structured analysis |
+| `analysis.tokensUsed` | number | AI tokens consumed |
+| `analysis.createdAt` | string | Analysis timestamp |
+
+### result.hook
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `type` | string | Hook type (credibility, curiosity, etc.) |
+| `text` | string | The hook text |
+| `effectiveness` | string | Effectiveness assessment |
+
+### result.writingStyle
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `tone` | string | Writing tone |
+| `voice` | string | Narrative voice |
+| `techniques` | array | Writing techniques used |
+
+<Note>
+Analysis uses tokens from your plan's monthly allocation. Check `workspace_stats` to see remaining tokens.
+</Note>
+
+## Use Cases
+
+- Learn what makes high-performing content work
+- Understand hook patterns and structures
+- Get inspiration for your own content
+
+## Related Tools
+
+- [`digest_list`](/mcp-tools/digest-list) - Find content to analyze
+- [`block_create`](/mcp-tools/block-create) - Create content based on learnings

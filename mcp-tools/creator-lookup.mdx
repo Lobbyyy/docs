@@ -1,0 +1,100 @@
+---
+title: "creator_lookup"
+description: "Look up a creator by platform and handle"
+---
+
+# creator_lookup
+
+Look up a creator by platform and handle. Returns creator info and subscription status. Use before `subscription_create` to check if already subscribed.
+
+## Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `platform` | string | Yes | One of: `x`, `instagram`, `tiktok`, `youtube`, `linkedin` |
+| `handle` | string | Yes | Creator's handle (1-100 characters) |
+
+## Example
+
+<CodeGroup>
+```text Prompt
+Look up @levelsio on X
+```
+
+```json Response (Found)
+{
+  "found": true,
+  "creator": {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "platform": "x",
+    "handle": "levelsio",
+    "displayName": "Pieter Levels",
+    "bio": "Building startups in public",
+    "avatarUrl": "https://...",
+    "followerCount": 500000,
+    "isSubscribed": false,
+    "subscriptionStatus": null,
+    "lastIngestedAt": null
+  }
+}
+```
+
+```json Response (Not Found)
+{
+  "found": false,
+  "suggestion": "creator_not_in_system",
+  "hint": "You can still subscribe - the creator will be added automatically."
+}
+```
+
+```json Response (Already Subscribed)
+{
+  "found": true,
+  "creator": {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "platform": "x",
+    "handle": "levelsio",
+    "displayName": "Pieter Levels",
+    "isSubscribed": true,
+    "subscriptionStatus": "active",
+    "lastIngestedAt": "2024-03-15T08:00:00Z"
+  }
+}
+```
+</CodeGroup>
+
+## Response Fields
+
+### When found
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `found` | boolean | `true` |
+| `creator.id` | string | Creator UUID |
+| `creator.platform` | string | Platform name |
+| `creator.handle` | string | Creator's handle |
+| `creator.displayName` | string | Display name |
+| `creator.bio` | string | Creator's bio |
+| `creator.avatarUrl` | string | Profile image URL |
+| `creator.followerCount` | number | Follower count |
+| `creator.isSubscribed` | boolean | Whether you're subscribed |
+| `creator.subscriptionStatus` | string | `active`, `paused`, or `null` |
+| `creator.lastIngestedAt` | string | Last content fetch timestamp |
+
+### When not found
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `found` | boolean | `false` |
+| `suggestion` | string | Error code |
+| `hint` | string | Helpful message |
+
+## Use Cases
+
+- Check if a creator exists before subscribing
+- See subscription status for a creator
+- Get creator metadata (bio, follower count)
+
+## Related Tools
+
+- [`subscription_create`](/mcp-tools/subscription-create) - Subscribe after looking up

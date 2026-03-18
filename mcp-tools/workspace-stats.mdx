@@ -1,0 +1,87 @@
+---
+title: "workspace_stats"
+description: "Get workspace overview including stats, recent activity, and plan usage limits"
+---
+
+# workspace_stats
+
+Get workspace overview including stats, recent activity, and plan usage limits. Call this first to understand what operations are available.
+
+## Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `workspaceId` | string (UUID) | No | Workspace ID. Uses default workspace if not provided. |
+
+## Example
+
+<CodeGroup>
+```text Prompt
+What's my Coconut workspace status?
+```
+
+```json Response
+{
+  "workspace": {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "name": "My Workspace",
+    "createdAt": "2024-01-15T10:30:00Z"
+  },
+  "user": {
+    "id": "user_abc123"
+  },
+  "plan": {
+    "name": "max",
+    "limits": {
+      "creators": { "used": 5, "limit": 25 },
+      "ingestionsPerMonth": { "used": 120, "limit": 500 },
+      "stash": { "used": 1500, "limit": 10000 },
+      "analysisTokensPerMonth": { "used": 50000, "limit": 500000 }
+    },
+    "mcpAccess": true,
+    "periodStart": "2024-03-01",
+    "periodEnd": "2024-03-31"
+  },
+  "stats": {
+    "subscriptions": { "total": 5, "active": 4, "paused": 1 },
+    "content": { "total": 350 },
+    "blocks": { "total": 25, "draft": 20, "published": 5 },
+    "digest": { "pending": 45, "saved": 120, "skipped": 85, "later": 15 }
+  }
+}
+```
+</CodeGroup>
+
+## Response Fields
+
+### workspace
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | string | Workspace UUID |
+| `name` | string | Workspace name |
+| `createdAt` | string | ISO timestamp |
+
+### plan.limits
+
+| Field | Description |
+|-------|-------------|
+| `creators` | Number of creators you can subscribe to |
+| `ingestionsPerMonth` | Content fetches per billing period |
+| `stash` | Total content items you can store |
+| `analysisTokensPerMonth` | AI analysis tokens per billing period |
+
+### stats
+
+| Field | Description |
+|-------|-------------|
+| `subscriptions` | Total, active, and paused subscription counts |
+| `content` | Total content items from all subscriptions |
+| `blocks` | Your created content blocks by status |
+| `digest` | Content items by review status |
+
+## Use Cases
+
+- Check plan limits before subscribing to new creators
+- Monitor usage during billing period
+- Get overview of workspace activity

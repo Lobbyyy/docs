@@ -1,0 +1,112 @@
+---
+title: "digest_list"
+description: "Get unactioned content from the digest queue"
+---
+
+# digest_list
+
+Get unactioned content from the digest queue. These are posts that need to be reviewed (saved, skipped, or marked for later).
+
+## Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `platform` | string | No | Filter by platform: `x`, `instagram`, `tiktok`, `youtube`, `linkedin` |
+| `limit` | number | No | Items per page (1-100, default: 20) |
+| `offset` | number | No | Items to skip (default: 0) |
+
+## Example
+
+<CodeGroup>
+```text Prompt
+Show me the latest content in my digest from X
+```
+
+```json Response
+{
+  "items": [
+    {
+      "id": "digest-item-123",
+      "content": {
+        "platform": "x",
+        "creatorHandle": "levelsio",
+        "text": "Just launched my 70th project. Here's what I learned...\n\n1. Ship fast\n2. Talk to users\n3. Iterate quickly\n\nThread below:",
+        "title": null,
+        "mediaUrls": ["https://..."],
+        "videoUrl": null,
+        "externalUrl": null,
+        "metrics": {
+          "likes": 5420,
+          "comments": 342,
+          "views": 150000,
+          "shares": 890
+        },
+        "postedAt": "2024-03-15T08:30:00Z"
+      }
+    },
+    {
+      "id": "digest-item-124",
+      "content": {
+        "platform": "x",
+        "creatorHandle": "naval",
+        "text": "Seek wealth, not money or status. Wealth is having assets that earn while you sleep.",
+        "title": null,
+        "mediaUrls": [],
+        "videoUrl": null,
+        "externalUrl": null,
+        "metrics": {
+          "likes": 12500,
+          "comments": 890,
+          "views": 500000,
+          "shares": 3200
+        },
+        "postedAt": "2024-03-14T15:00:00Z"
+      }
+    }
+  ],
+  "pagination": {
+    "total": 45,
+    "limit": 20,
+    "offset": 0,
+    "hasMore": true
+  }
+}
+```
+</CodeGroup>
+
+## Response Fields
+
+### item
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | string | Digest item UUID (use with `digest_action`) |
+| `content.platform` | string | Platform name |
+| `content.creatorHandle` | string | Creator's handle |
+| `content.text` | string | Post text content |
+| `content.title` | string | Post title (videos, articles) |
+| `content.mediaUrls` | array | Image/media URLs |
+| `content.videoUrl` | string | Video URL |
+| `content.externalUrl` | string | External link |
+| `content.metrics` | object | Engagement metrics |
+| `content.postedAt` | string | Original post time |
+
+### metrics
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `likes` | number | Like/heart count |
+| `comments` | number | Comment count |
+| `views` | number | View count |
+| `shares` | number | Share/retweet count |
+
+## Use Cases
+
+- Review new content from subscribed creators
+- Filter by platform for focused curation
+- Find high-performing content to analyze
+
+## Related Tools
+
+- [`digest_action`](/mcp-tools/digest-action) - Take action on items
+- [`content_analyze`](/mcp-tools/content-analyze) - Analyze interesting content

@@ -1,0 +1,72 @@
+---
+title: "ingestion_trigger"
+description: "Trigger content ingestion for a subscribed creator"
+---
+
+# ingestion_trigger
+
+Trigger content ingestion for a subscribed creator. Fetches new posts asynchronously. Use `ingestion_status` to check progress.
+
+## Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `creatorId` | string (UUID) | Yes | Creator UUID |
+| `platform` | string | Yes | One of: `x`, `instagram`, `tiktok`, `youtube`, `linkedin` |
+| `handle` | string | Yes | Creator's handle (1-100 characters) |
+| `postLimit` | number | No | Posts to fetch (1-100, default: 20) |
+
+## Example
+
+<CodeGroup>
+```text Prompt
+Fetch the latest 50 posts from @levelsio
+```
+
+```json Response
+{
+  "job": {
+    "id": "job-456",
+    "status": "pending",
+    "deliveredFromPool": 15,
+    "toScrape": 35,
+    "hint": "15 posts delivered from cache, 35 more being scraped"
+  },
+  "message": "Ingestion started for @levelsio"
+}
+```
+</CodeGroup>
+
+## Response Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `job.id` | string | Job ID for status tracking |
+| `job.status` | string | Initial status (`pending`) |
+| `job.deliveredFromPool` | number | Posts available from cache |
+| `job.toScrape` | number | Posts being fetched fresh |
+| `job.hint` | string | Human-readable status |
+| `message` | string | Confirmation message |
+
+## Error Responses
+
+| Code | Meaning |
+|------|---------|
+| `not_subscribed` | Not subscribed to this creator |
+| `limit_exceeded` | Ingestion limit exceeded for billing period |
+| `job_in_progress` | An ingestion is already running |
+
+<Tip>
+Content that's already in Coconut's pool is delivered instantly from cache. Only new content requires scraping.
+</Tip>
+
+## Use Cases
+
+- Get fresh content from a creator
+- Top up content after initial subscription
+- Manually sync when daily updates are disabled
+
+## Related Tools
+
+- [`ingestion_status`](/mcp-tools/ingestion-status) - Check job progress
+- [`subscription_list`](/mcp-tools/subscription-list) - Find creator IDs

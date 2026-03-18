@@ -1,80 +1,122 @@
 ---
 title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+description: "Get Coconut working with Claude Code in 2 minutes"
 ---
 
-## Get started in three steps
+# Quickstart
 
-Get your documentation site running locally and make your first customization.
+Get your Coconut MCP server connected to Claude Code.
 
-### Step 1: Set up your local environment
+## Prerequisites
 
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
-    
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
-    
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
+- [Claude Code](https://claude.ai/claude-code) installed
+- A Coconut account at [coconut.dev](https://coconut.dev)
 
-### Step 2: Deploy your changes
+## Step 1: Get Your API Key
 
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
-    
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
+1. Sign in to [coconut.dev](https://coconut.dev)
+2. Go to **Settings** → **API Keys**
+3. Click **Create API Key**
+4. Copy the key (you'll only see it once)
 
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
+<Warning>
+Keep your API key secret. Never commit it to version control or share it publicly.
+</Warning>
 
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
+## Step 2: Configure Claude Code
 
-### Step 3: Go live
+Add Coconut to your Claude Code MCP configuration. Open your config file:
 
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
+<CodeGroup>
+```bash macOS
+code ~/.claude/claude_code_config.json
+```
 
-## Next steps
+```bash Linux
+code ~/.claude/claude_code_config.json
+```
 
-Now that you have your docs running, explore these key features:
+```bash Windows
+code %USERPROFILE%\.claude\claude_code_config.json
+```
+</CodeGroup>
+
+Add the Coconut MCP server:
+
+```json claude_code_config.json
+{
+  "mcpServers": {
+    "coconut": {
+      "type": "http",
+      "url": "https://coconut.dev/api/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_API_KEY"
+      }
+    }
+  }
+}
+```
+
+<Tip>
+Replace `YOUR_API_KEY` with the API key you created in Step 1.
+</Tip>
+
+## Step 3: Restart Claude Code
+
+Restart Claude Code to load the new MCP configuration:
+
+```bash
+claude --mcp-debug
+```
+
+The `--mcp-debug` flag shows MCP connection status. You should see:
+
+```
+coconut: 11 tools available
+```
+
+## Step 4: Test the Connection
+
+Ask Claude to check your workspace:
+
+```
+What's my Coconut workspace status?
+```
+
+Claude will use the `workspace_stats` tool to show your workspace overview.
+
+## Next Steps
 
 <CardGroup cols={2}>
-
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
-
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
-
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
-
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
-
+  <Card title="Subscribe to Creators" icon="user-plus" href="/mcp-tools/subscription-create">
+    Follow creators on X, Instagram, TikTok, YouTube, or LinkedIn
+  </Card>
+  <Card title="Browse Your Digest" icon="inbox" href="/mcp-tools/digest-list">
+    Review content from creators you follow
+  </Card>
+  <Card title="Analyze Content" icon="brain" href="/mcp-tools/content-analyze">
+    Get AI-powered breakdowns of what makes content work
+  </Card>
+  <Card title="Create Content" icon="pen" href="/mcp-tools/block-create">
+    Draft tweets, threads, newsletters, and more
+  </Card>
 </CardGroup>
 
-<Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
-</Note>
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Claude Code shows 'Capabilities: none'">
+    This usually means the Authorization header isn't being sent correctly. Check that:
+    1. Your API key is valid (test it at coconut.dev/settings)
+    2. The `Authorization` header uses `Bearer ` prefix (with a space)
+    3. You've restarted Claude Code after changing config
+  </Accordion>
+
+  <Accordion title="'Authentication failed' errors">
+    Your API key may be invalid or expired. Generate a new one at coconut.dev/settings.
+  </Accordion>
+
+  <Accordion title="Tools return 'workspace not found'">
+    Make sure you have at least one workspace in Coconut. Sign in to coconut.dev and create a workspace if needed.
+  </Accordion>
+</AccordionGroup>

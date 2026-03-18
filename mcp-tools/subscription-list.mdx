@@ -1,0 +1,105 @@
+---
+title: "subscription_list"
+description: "List all subscriptions in the workspace"
+---
+
+# subscription_list
+
+List all subscriptions in the workspace. Shows creator info, sync status, and content counts.
+
+## Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `status` | string | No | Filter: `active`, `paused`, or `all` (default: `all`) |
+| `limit` | number | No | Items per page (1-100, default: 50) |
+| `offset` | number | No | Items to skip (default: 0) |
+
+## Example
+
+<CodeGroup>
+```text Prompt
+Show me my active subscriptions
+```
+
+```json Response
+{
+  "subscriptions": [
+    {
+      "creatorId": "550e8400-e29b-41d4-a716-446655440000",
+      "creator": {
+        "handle": "levelsio",
+        "displayName": "Pieter Levels",
+        "platform": "x",
+        "avatarUrl": "https://...",
+        "followerCount": 500000
+      },
+      "isActive": true,
+      "postLimit": 30,
+      "dailyUpdates": true,
+      "lastSyncedAt": "2024-03-15T08:00:00Z",
+      "createdAt": "2024-01-10T12:00:00Z"
+    },
+    {
+      "creatorId": "661f8400-e29b-41d4-a716-446655440001",
+      "creator": {
+        "handle": "naval",
+        "displayName": "Naval",
+        "platform": "x",
+        "avatarUrl": "https://...",
+        "followerCount": 2000000
+      },
+      "isActive": true,
+      "postLimit": 20,
+      "dailyUpdates": false,
+      "lastSyncedAt": "2024-03-14T12:00:00Z",
+      "createdAt": "2024-02-01T09:00:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 5,
+    "limit": 50,
+    "offset": 0,
+    "hasMore": false
+  }
+}
+```
+</CodeGroup>
+
+## Response Fields
+
+### subscription
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `creatorId` | string | Creator UUID |
+| `creator.handle` | string | Creator's handle |
+| `creator.displayName` | string | Display name |
+| `creator.platform` | string | Platform name |
+| `creator.avatarUrl` | string | Profile image URL |
+| `creator.followerCount` | number | Follower count |
+| `isActive` | boolean | Whether subscription is active |
+| `postLimit` | number | Max posts per ingestion |
+| `dailyUpdates` | boolean | Daily sync enabled |
+| `lastSyncedAt` | string | Last content fetch time |
+| `createdAt` | string | Subscription creation time |
+
+### pagination
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `total` | number | Total subscriptions matching filter |
+| `limit` | number | Items per page |
+| `offset` | number | Items skipped |
+| `hasMore` | boolean | More items available |
+
+## Use Cases
+
+- See all creators you're following
+- Check when content was last synced
+- Find subscriptions that need attention
+
+## Related Tools
+
+- [`subscription_create`](/mcp-tools/subscription-create) - Add new subscriptions
+- [`ingestion_trigger`](/mcp-tools/ingestion-trigger) - Fetch content for a subscription
