@@ -15,7 +15,8 @@
   "favicon": "/favicon.svg",
   "logo": {
     "light": "/logo/coconut.png",
-    "dark": "/logo/coconut.png"
+    "dark": "/logo/coconut.png",
+    "href": "https://coconutapp.xyz"
   },
   "appearance": {
     "default": "system"
@@ -83,8 +84,16 @@
   "navbar": {
     "links": [
       {
+        "label": "Home",
+        "href": "https://coconutapp.xyz"
+      },
+      {
         "label": "Pricing",
         "href": "https://coconutapp.xyz/pricing"
+      },
+      {
+        "label": "Sign In",
+        "href": "https://coconutapp.xyz/sign-in"
       }
     ],
     "primary": {
