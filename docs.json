@@ -1,13 +1,37 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
+  "theme": "maple",
   "name": "Coconut",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#22C55E",
-    "dark": "#15803D"
+    "primary": "#CC2500",
+    "light": "#E63B00",
+    "dark": "#A31E00",
+    "background": {
+      "light": "#F5F5F5",
+      "dark": "#000000"
+    }
   },
   "favicon": "/favicon.svg",
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "appearance": {
+    "default": "system"
+  },
+  "background": {
+    "decoration": "gradient"
+  },
+  "fonts": {
+    "heading": {
+      "family": "Plus Jakarta Sans",
+      "weight": 600
+    },
+    "body": {
+      "family": "Plus Jakarta Sans",
+      "weight": 400
+    }
+  },
   "navigation": {
     "tabs": [
       {
@@ -44,7 +68,7 @@
       "anchors": [
         {
           "anchor": "App",
-          "href": "https://coconut.dev",
+          "href": "https://coconutapp.xyz",
           "icon": "browser"
         },
         {
@@ -55,21 +79,17 @@
       ]
     }
   },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
-  },
   "navbar": {
     "links": [
       {
         "label": "Pricing",
-        "href": "https://coconut.dev/pricing"
+        "href": "https://coconutapp.xyz/pricing"
       }
     ],
     "primary": {
       "type": "button",
       "label": "Get Started",
-      "href": "https://coconut.dev/sign-up"
+      "href": "https://coconutapp.xyz/sign-up"
     }
   },
   "footer": {

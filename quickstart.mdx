@@ -14,7 +14,7 @@ Get your Coconut MCP server connected to Claude Code.
 
 ## Step 1: Get Your API Key
 
-1. Sign in to [coconut.dev](https://coconut.dev)
+1. Sign in to [coconutapp.xyz](https://coconutapp.xyz)
 2. Go to **Settings** → **API Keys**
 3. Click **Create API Key**
 4. Copy the key (you'll only see it once)
@@ -48,7 +48,7 @@ Add the Coconut MCP server:
   "mcpServers": {
     "coconut": {
       "type": "http",
-      "url": "https://coconut.dev/api/mcp",
+      "url": "https://coconutapp.xyz/api/mcp",
       "headers": {
         "Authorization": "Bearer YOUR_API_KEY"
       }
@@ -107,16 +107,16 @@ Claude will use the `workspace_stats` tool to show your workspace overview.
 <AccordionGroup>
   <Accordion title="Claude Code shows 'Capabilities: none'">
     This usually means the Authorization header isn't being sent correctly. Check that:
-    1. Your API key is valid (test it at coconut.dev/settings)
+    1. Your API key is valid (test it at coconutapp.xyz/settings)
     2. The `Authorization` header uses `Bearer ` prefix (with a space)
     3. You've restarted Claude Code after changing config
   </Accordion>
 
   <Accordion title="'Authentication failed' errors">
-    Your API key may be invalid or expired. Generate a new one at coconut.dev/settings.
+    Your API key may be invalid or expired. Generate a new one at coconutapp.xyz/settings.
   </Accordion>
 
   <Accordion title="Tools return 'workspace not found'">
-    Make sure you have at least one workspace in Coconut. Sign in to coconut.dev and create a workspace if needed.
+    Make sure you have at least one workspace in Coconut. Sign in to coconutapp.xyz and create a workspace if needed.
   </Accordion>
 </AccordionGroup>
